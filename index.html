@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>매직트리하우스 타이타닉으로 배우는 영어 감각</title>
+<meta name="description" content="매직트리하우스(Magic Tree House) 17권 Tonight on the Titanic의 장면으로 have, get, be 같은 기본동사의 감각을 익히는 영어 원서 학습 로드맵">
+<meta name="keywords" content="매직트리하우스, 매직트리하우스 17권, 매직트리하우스 타이타닉, Magic Tree House, Tonight on the Titanic, 마법의 시간여행, 영어원서 읽기, 영어 기본동사, 엄마표 영어">
+<link rel="canonical" href="https://jaeyoungkang.github.io/magic-tree-house-english/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="매직트리하우스 타이타닉으로 배우는 영어 감각">
+<meta property="og:description" content="매직트리하우스(Magic Tree House) 17권 Tonight on the Titanic의 장면으로 have, get, be 같은 기본동사의 감각을 익히는 영어 원서 학습 로드맵">
+<meta property="og:url" content="https://jaeyoungkang.github.io/magic-tree-house-english/">
+<meta property="og:locale" content="ko_KR">
+<style>html{-webkit-text-size-adjust:100%}body{margin:0}[hidden]{display:none!important}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@500;700;800&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&display=swap">
+<style>
+/* Layout: 한 줄기 읽기 칼럼. 맨 위에 '영역' 그림이 있고, 그림이 이 페이지의 중심 장치다 */
+:root {
+  --bg: #F3F5F7;
+  --surface: #FFFFFF;
+  --fg: #16212C;
+  --muted: #5A6875;
+  --line: #D5DCE3;
+  --accent: #0B6B70;
+  --accent-soft: #DCEEEE;
+  --zone: rgba(11,107,112,.10);
+  --good: #1E7A44;
+  --good-soft: #E1F2E7;
+  --warn: #9A5B0C;
+  --warn-soft: #F7EBD9;
+  --bad: #A1352C;
+  --bad-soft: #F6E1DE;
+  --f-display: "Hahmlet", "Nanum Myeongjo", serif;
+  --f-body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --f-en: "Newsreader", Georgia, "Times New Roman", serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0F171E; --surface: #16212B; --fg: #E4EAF0; --muted: #98A6B3; --line: #2A3946;
+  --accent: #5CC3C5; --accent-soft: #173538; --zone: rgba(92,195,197,.12);
+  --good: #6CCB91; --good-soft: #17301F; --warn: #E2AE62; --warn-soft: #34281A; --bad: #EE8A7F; --bad-soft: #3A1F1C;
+  color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0F171E; --surface: #16212B; --fg: #E4EAF0; --muted: #98A6B3; --line: #2A3946;
+  --accent: #5CC3C5; --accent-soft: #173538; --zone: rgba(92,195,197,.12);
+  --good: #6CCB91; --good-soft: #17301F; --warn: #E2AE62; --warn-soft: #34281A; --bad: #EE8A7F; --bad-soft: #3A1F1C;
+  color-scheme: dark }
+
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--fg); font: 16px/1.75 var(--f-body); }
+.wrap { max-width: 760px; margin: 0 auto; padding-inline: 20px; padding-block: 40px 72px; display: grid; gap: 64px; }
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; line-height: 1.3; }
+h1 { font-size: clamp(2.2rem, 7vw, 3.4rem); font-weight: 800; letter-spacing: -.01em; }
+h2 { font-size: 1.6rem; font-weight: 700; }
+h3 { font-size: 1.1rem; font-weight: 700; }
+p { margin: 0; }
+.en { font-family: var(--f-en); font-size: 1.12em; }
+.eyebrow { font-size: .78rem; letter-spacing: .12em; color: var(--accent); font-weight: 600; }
+.muted { color: var(--muted); }
+section { display: grid; gap: 20px; min-width: 0; }
+.lede { font-size: 1.1rem; color: var(--muted); max-width: 62ch; }
+.note { font-size: .85rem; color: var(--muted); }
+.tag { display: inline-block; font-size: .72rem; font-weight: 600; letter-spacing: .04em; padding: 1px 8px; border-radius: 999px; }
+.tag.en-k { background: var(--good-soft); color: var(--good); }
+.tag.ko-k { background: var(--warn-soft); color: var(--warn); }
+.tag.la-k { background: var(--accent-soft); color: var(--accent); }
+
+/* 영역 그림 */
+.hero { display: grid; gap: 22px; }
+.sense { display: grid; gap: 10px; border-left: 3px solid var(--accent); padding-left: 16px; }
+.sense p b { color: var(--accent); font-weight: 600; margin-right: 6px; }
+.stage { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px; display: grid; gap: 14px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font: 500 .9rem var(--f-body); border: 1px solid var(--line); background: transparent; color: var(--fg); border-radius: 999px; padding: 5px 14px; cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.chip:focus-visible, .opt:focus-visible, .btn:focus-visible, textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.stage-body { display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: 18px; align-items: center; }
+.stage svg { width: 100%; height: auto; max-width: 100%; display: block; }
+.stage-text { display: grid; gap: 10px; min-width: 0; }
+.stage-text .big { font-family: var(--f-en); font-size: 1.6rem; line-height: 1.3; }
+.kv { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; font-size: .92rem; }
+.kv dt { color: var(--muted); }
+.kv dd { margin: 0; }
+@media (max-width: 560px) { .stage-body { grid-template-columns: 1fr; } .stage svg { max-width: 260px; margin: 0 auto; } }
+
+/* 주어 대비 */
+.compare { display: grid; gap: 12px; }
+.row { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; display: grid; gap: 6px; min-width: 0; }
+.row .en { font-size: 1.2rem; }
+.row.win { border-color: var(--good); }
+
+/* 문제 */
+.quiz-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.progress { font-size: .85rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px; display: grid; gap: 14px; min-width: 0; }
+.card .meta { font-size: .8rem; color: var(--muted); }
+.scene { font-size: 1rem; }
+.ask { font-weight: 600; }
+.opts { display: grid; gap: 8px; }
+.opt { text-align: left; font: inherit; color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; cursor: pointer; display: grid; gap: 4px; }
+.opt .en { font-size: 1.1rem; }
+.opt:disabled { cursor: default; }
+.opt.right { border-color: var(--good); background: var(--good-soft); }
+.opt.wrong { border-color: var(--bad); background: var(--bad-soft); }
+.opt .why { font-size: .9rem; color: var(--fg); }
+.feedback { display: grid; gap: 10px; border-top: 1px dashed var(--line); padding-top: 14px; }
+.feedback .verdict { font-weight: 600; }
+.feedback .verdict.ok { color: var(--good); }
+.feedback .verdict.no { color: var(--bad); }
+.feel { background: var(--accent-soft); border-radius: 10px; padding: 12px 14px; font-size: .95rem; }
+textarea { width: 100%; min-height: 76px; font: 1.05rem/1.5 var(--f-en); color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; resize: vertical; }
+.actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.btn { font: 600 .92rem var(--f-body); border-radius: 999px; padding: 8px 18px; cursor: pointer; border: 1px solid var(--accent); background: var(--accent); color: var(--bg); }
+.btn.ghost { background: transparent; color: var(--accent); }
+.btn[disabled] { opacity: .45; cursor: default; }
+.hint { font-size: .92rem; color: var(--muted); }
+.fixes { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.fixes li { display: grid; gap: 2px; font-size: .93rem; }
+.fixes li .en { font-size: 1rem; }
+.done { text-align: center; display: grid; gap: 8px; }
+.done .score { font-family: var(--f-display); font-size: 2.4rem; font-weight: 800; color: var(--accent); font-variant-numeric: tabular-nums; }
+
+/* has / had */
+.tl { overflow-x: auto; }
+.tl svg { min-width: 520px; width: 100%; height: auto; display: block; }
+.pair { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
+@media (max-width: 560px) { .pair { grid-template-columns: 1fr; } }
+
+.learner { display: grid; gap: 12px; }
+.quote { border-left: 3px solid var(--line); padding-left: 14px; display: grid; gap: 4px; }
+.quote q { font-weight: 500; }
+footer { font-size: .82rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 20px; display: grid; gap: 6px; }
+@media (prefers-reduced-motion: no-preference) {
+  .zone-item { transition: opacity .35s ease, transform .35s ease; }
+}
+.series { display: flex; gap: 8px; flex-wrap: wrap; font-size: .85rem; }
+.series a, .series span { padding: 3px 12px; border-radius: 999px; border: 1px solid var(--line); color: var(--fg); text-decoration: none; }
+.series span { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.series a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+</style>
+<style>
+.grp { display: grid; gap: 10px; }
+.gh { font-weight: 600; }
+.num { color: var(--accent); font-family: var(--f-display); }
+.vcs { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px; }
+.vc { display: grid; gap: 2px; padding: 14px 16px; border-radius: 12px; border: 1px dashed var(--line); color: var(--muted); text-decoration: none; min-width: 0; }
+.vc.done { border: 1px solid var(--accent); background: var(--surface); color: var(--fg); }
+.vc.done:hover { background: var(--accent-soft); }
+.vc:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.vc .w { font-size: 1.5rem; line-height: 1.2; }
+.vc .pic { font-size: .9rem; }
+.vc .st { font-size: .75rem; letter-spacing: .06em; font-weight: 600; color: var(--muted); }
+.vc.done .st { color: var(--accent); }
+.steps { margin: 0; padding-left: 1.3em; display: grid; gap: 8px; }
+.three { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; }
+@media (max-width: 560px) { .three { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header class="hero">
+    <span class="eyebrow">매직트리하우스 17권 · Tonight on the Titanic</span>
+    <h1>매직트리하우스 타이타닉으로 배우는 영어 감각</h1>
+    <p class="lede">매직트리하우스(Magic Tree House) 17권 <i>Tonight on the Titanic</i>을 영어 원서로 읽고, 그 장면으로 영어 화자의 감각을 익힙니다. 뜻을 외우는 대신, have, get, be 같은 기본동사가 영어 화자에게 <b>어떤 그림으로 보이는지</b>를 잡습니다. 한국인 학습자가 실제로 풀고 헷갈린 기록을 바탕으로 한 장씩 만들고 있습니다.</p>
+  </header>
+
+  <section aria-labelledby="story-h">
+    <h2 id="story-h">어떤 이야기인가</h2>
+    <p class="muted">Mary Pope Osborne, 1999년. 10장, 약 70쪽. 국내 번역판은 『마법의 시간여행』 시리즈입니다.</p>
+    <p>비 오는 밤, 잭과 애니 남매는 나무 집에서 마법에 걸린 강아지 테디를 만나 1912년의 타이타닉에 내립니다. 배가 빙산에 부딪혀 가라앉는 동안 둘은 3등실의 빨간 머리 남매 윌리엄과 루시를 구명보트로 데려가고, 루시에게서 아버지의 은시계를 선물로 받습니다. 테디의 짖는 소리를 따라 나무 집을 찾아 집으로 돌아오니, 시계는 배가 가라앉은 2시 20분에 멈춰 있습니다.</p>
+  </section>
+
+  <section aria-labelledby="sense-h">
+    <h2 id="sense-h">감각을 셋으로 본다</h2>
+    <div class="three">
+      <div class="row"><h3>이미지</h3><p class="muted">무엇이 어디에 있고, 어느 쪽으로 움직이고, 어떤 경계를 넘는지.</p></div>
+      <div class="row"><h3>뉘앙스</h3><p class="muted">말의 무게와 거리, 일상의 결인지 격식의 결인지.</p></div>
+      <div class="row"><h3>예시</h3><p class="muted">영어 화자의 귀에 자연스러운 예와 걸리는 예.</p></div>
+    </div>
+    <p>문제마다 같은 장면을 세 가지로 말한 문장을 견줍니다. 한국어를 그대로 옮긴 문장, 라틴어 계열의 격식 있는 낱말을 쓴 문장, 그리고 영어 화자가 실제로 쓰는 문장입니다.</p>
+  </section>
+
+  <section aria-labelledby="map-h">
+    <h2 id="map-h">로드맵</h2>
+    <p>1단계는 기본동사 14개입니다. 그림이 맞닿은 동사끼리 짝을 지어 돕니다. on, out, up 같은 불변화사와 to, of 같은 잇는 말은 동사와 함께 나올 때 익힙니다.</p>
+    
+      <div class="grp">
+        <p class="gh"><span class="num">①</span> 있음과 들어섬</p>
+        <div class="vcs"><a class="vc done" href="have.html"><span class="w en">have</span><span class="pic">영역 안에 놓여 있다</span><span class="st">읽기</span></a><a class="vc done" href="get.html"><span class="w en">get</span><span class="pic">경계를 넘어 들어선다</span><span class="st">읽기</span></a><a class="vc done" href="be.html"><span class="w en">be</span><span class="pic">장소·모습에 놓여 있다</span><span class="st">읽기</span></a></div>
+      </div>
+      <div class="grp">
+        <p class="gh"><span class="num">②</span> 멀어짐과 다가옴</p>
+        <div class="vcs"><div class="vc"><span class="w en">go</span><span class="pic">기준점에서 멀어진다</span><span class="st">다음</span></div><div class="vc"><span class="w en">come</span><span class="pic">기준점으로 다가온다</span><span class="st">다음</span></div></div>
+      </div>
+      <div class="grp">
+        <p class="gh"><span class="num">③</span> 놓기, 집기, 건네기</p>
+        <div class="vcs"><div class="vc"><span class="w en">put</span><span class="pic">손으로 옮겨 놓는다</span><span class="st">준비 중</span></div><div class="vc"><span class="w en">take</span><span class="pic">손을 뻗어 집어 든다</span><span class="st">준비 중</span></div><div class="vc"><span class="w en">give</span><span class="pic">상대의 손으로 넘긴다</span><span class="st">준비 중</span></div></div>
+      </div>
+      <div class="grp">
+        <p class="gh"><span class="num">④</span> 붙들기와 버티기</p>
+        <div class="vcs"><div class="vc"><span class="w en">hold</span><span class="pic">쥐고 붙들어 둔다</span><span class="st">준비 중</span></div><div class="vc"><span class="w en">keep</span><span class="pic">힘을 견디며 붙들어 둔다</span><span class="st">준비 중</span></div><div class="vc"><span class="w en">set</span><span class="pic">제자리에 앉혀 놓는다</span><span class="st">준비 중</span></div></div>
+      </div>
+      <div class="grp">
+        <p class="gh"><span class="num">⑤</span> 방식과 눈길과 만들기</p>
+        <div class="vcs"><div class="vc"><span class="w en">run</span><span class="pic">빨리 달린다</span><span class="st">준비 중</span></div><div class="vc"><span class="w en">look</span><span class="pic">눈길을 보낸다</span><span class="st">준비 중</span></div><div class="vc"><span class="w en">make</span><span class="pic">전에 없던 것을 만든다</span><span class="st">준비 중</span></div></div>
+      </div>
+    <ol class="steps">
+      <li><b>기본동사 14개</b>: 지금 하고 있습니다.</li>
+      <li><b>섞어 풀기</b>: on, out, up, over 같은 불변화사와 to, at, of, as를 동사와 섞어 풉니다.</li>
+      <li><b>다른 권</b>: 18권 <i>Buffalo Before Breakfast</i>부터 24권까지의 장면으로 넓힙니다.</li>
+      <li><b>어순</b>: 아는 것은 앞에, 새것은 뒤에. 동사 자리에 오면 동사로 들리는 영어의 감각을 따로 다룹니다.</li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="unit-h">
+    <h2 id="unit-h">한 페이지를 푸는 법</h2>
+    <ol class="steps">
+      <li>표제어의 이미지, 뉘앙스, 예시를 읽습니다.</li>
+      <li>책 장면을 읽고 세 문장 가운데 가장 영어다운 것을 고릅니다. 고른 까닭을 감각의 말로 말해 봅니다.</li>
+      <li>세 문장이 어떻게 다르게 들리는지 설명을 봅니다.</li>
+      <li>마지막에는 직접 영어로 써 보고, 모범 답과 견줍니다.</li>
+    </ol>
+  </section>
+
+  <footer>
+    <p>장면과 짧은 인용은 Mary Pope Osborne, <i>Magic Tree House #17: Tonight on the Titanic</i>에서 빌렸습니다. 문제의 오답 선택지와 설명은 학습용으로 새로 썼습니다.</p>
+    <p>감각을 '이미지, 뉘앙스, 예시' 셋으로 보는 틀은 공간 인지 언어학(Tyler &amp; Evans, Talmy)과 한국인 학습자 연구를 바탕으로 정리한 학습 가설입니다.</p>
+  </footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://jaeyoungkang.github.io/magic-tree-house-english/sitemap.xml
