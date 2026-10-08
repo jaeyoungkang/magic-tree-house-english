@@ -1,0 +1,16 @@
+[Unit]
+Description=mth-english sense API (magic-tree-house-english)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/root/.openclaw/workspace/repos/mth-english/api
+EnvironmentFile=-/etc/mth-english.env
+ExecStart=/root/.openclaw/workspace/repos/mth-english/.venv/bin/uvicorn app:app --host 127.0.0.1 --port 8775
+Restart=always
+RestartSec=3
+User=root
+
+[Install]
+WantedBy=multi-user.target

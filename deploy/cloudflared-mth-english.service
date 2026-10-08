@@ -1,0 +1,14 @@
+[Unit]
+Description=Cloudflare Tunnel for mth-english API
+After=network-online.target mth-english.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/root/.local/bin/cloudflared --no-autoupdate --config /etc/cloudflared/mth-english.yml tunnel run mth-english
+Restart=always
+RestartSec=5
+User=root
+
+[Install]
+WantedBy=multi-user.target
