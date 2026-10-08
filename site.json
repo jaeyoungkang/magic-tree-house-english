@@ -1,0 +1,42 @@
+{
+  "base": "https://english.artificialmind.kr",
+  "name": "영어 감각",
+  "tagline": "뜻을 외우지 않고 그림으로 잡는 영어 기본동사",
+  "groups": [
+    { "n": "①", "title": "있음과 들어섬", "words": ["have", "get", "be"] },
+    { "n": "②", "title": "멀어짐과 다가옴", "words": ["go", "come"] },
+    { "n": "③", "title": "놓기, 집기, 건네기", "words": ["put", "take", "give"] },
+    { "n": "④", "title": "붙들기와 버티기", "words": ["hold", "keep", "set"] },
+    { "n": "⑤", "title": "방식과 눈길과 만들기", "words": ["run", "look", "make"] }
+  ],
+  "words": {
+    "have": { "pic": "영역 안에 놓여 있다", "status": "ready" },
+    "get": { "pic": "경계를 넘어 들어선다", "status": "ready" },
+    "be": { "pic": "장소·모습에 놓여 있다", "status": "ready" },
+    "go": { "pic": "기준점에서 멀어진다", "status": "next" },
+    "come": { "pic": "기준점으로 다가온다", "status": "next" },
+    "put": { "pic": "손으로 옮겨 놓는다" },
+    "take": { "pic": "손을 뻗어 집어 든다" },
+    "give": { "pic": "상대의 손으로 넘긴다" },
+    "hold": { "pic": "쥐고 붙들어 둔다" },
+    "keep": { "pic": "힘을 견디며 붙들어 둔다" },
+    "set": { "pic": "제자리에 앉혀 놓는다" },
+    "run": { "pic": "빨리 달린다" },
+    "look": { "pic": "눈길을 보낸다" },
+    "make": { "pic": "전에 없던 것을 만든다" }
+  },
+  "books": [
+    {
+      "slug": "titanic",
+      "title": "Tonight on the Titanic",
+      "series": "Magic Tree House #17",
+      "ko": "매직트리하우스 17권",
+      "blurb": "1912년 타이타닉에 내린 잭과 애니가 3등실 남매를 구명보트로 데려가는 이야기",
+      "units": {
+        "have": "고르기 5 · 쓰기 2",
+        "get": "고르기 5 · 쓰기 2",
+        "be": "고르기 6 · 쓰기 3"
+      }
+    }
+  ]
+}

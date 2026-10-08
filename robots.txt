@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://jaeyoungkang.github.io/magic-tree-house-english/sitemap.xml
+
+Sitemap: https://english.artificialmind.kr/sitemap.xml

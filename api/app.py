@@ -20,6 +20,7 @@ PER_IP_PER_DAY = int(os.environ.get("PER_IP_PER_DAY", "30"))
 GLOBAL_PER_DAY = int(os.environ.get("GLOBAL_PER_DAY", "600"))
 MAX_CHARS = 300
 ALLOWED_ORIGINS = [
+    "https://english.artificialmind.kr",
     "https://jaeyoungkang.github.io",
     "http://localhost:8000",
     "http://127.0.0.1:8000",
