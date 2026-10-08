@@ -1,7 +1,7 @@
 """영어 감각 해설 API.
 
 영어 문장을 받으면 감각 사전(이미지, 뉘앙스, 예시)으로 해설하고, 한국어 문장을 받으면 영어다운 문장을 만들어
-같은 틀로 해설한다. Gemini API를 서버에서 부르고, 키는 환경 변수 GEMINI_API_KEY로만 읽는다.
+같은 틀로 해설한다. Claude API(Anthropic SDK)를 서버에서 부르고, 키는 환경 변수 ANTHROPIC_API_KEY로만 읽는다.
 """
 import json
 import os
@@ -9,15 +9,13 @@ import time
 from collections import defaultdict
 from pathlib import Path
 
-import httpx
+import anthropic
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
-GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
-GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-flash-latest")
-# 앞 모델이 붐비거나(503) 한도에 걸리면(429) 다음 모델로 넘어간다.
-FALLBACK_MODELS = [m for m in os.environ.get("GEMINI_FALLBACKS", "gemini-flash-latest,gemini-2.5-flash").split(",") if m]
+ANTHROPIC_MODEL = os.environ.get("ANTHROPIC_MODEL", "claude-sonnet-5-5")
+EFFORT = os.environ.get("ANTHROPIC_EFFORT", "low")
 PER_IP_PER_DAY = int(os.environ.get("PER_IP_PER_DAY", "30"))
 GLOBAL_PER_DAY = int(os.environ.get("GLOBAL_PER_DAY", "600"))
 MAX_CHARS = 300
@@ -49,36 +47,39 @@ RULES = """너는 한국인 영어 학습자를 돕는 해설자다. 영어 화�
 """ + SENSES
 
 ITEM = {
-    "type": "OBJECT",
+    "type": "object",
+    "additionalProperties": False,
     "properties": {
-        "word": {"type": "STRING", "description": "표제어 또는 덩어리(예: get, out, be about to)"},
-        "in_sentence": {"type": "STRING", "description": "문장에서 그 표제어가 쓰인 부분"},
-        "image": {"type": "STRING", "description": "이 문장에서 보이는 이미지"},
-        "nuance": {"type": "STRING", "description": "이 문장에서의 뉘앙스"},
+        "word": {"type": "string", "description": "표제어 또는 덩어리(예: get, out, be about to)"},
+        "in_sentence": {"type": "string", "description": "문장에서 그 표제어가 쓰인 부분"},
+        "image": {"type": "string", "description": "이 문장에서 보이는 이미지"},
+        "nuance": {"type": "string", "description": "이 문장에서의 뉘앙스"},
     },
     "required": ["word", "in_sentence", "image", "nuance"],
 }
 CONTRAST = {
-    "type": "OBJECT",
+    "type": "object",
+    "additionalProperties": False,
     "properties": {
-        "kind": {"type": "STRING", "enum": ["영어식", "한국어식 직역", "라틴어 계열"]},
-        "text": {"type": "STRING"},
-        "note": {"type": "STRING", "description": "영어 화자에게 어떻게 들리는지"},
+        "kind": {"type": "string", "enum": ["영어식", "한국어식 직역", "라틴어 계열"]},
+        "text": {"type": "string"},
+        "note": {"type": "string", "description": "영어 화자에게 어떻게 들리는지"},
     },
     "required": ["kind", "text", "note"],
 }
 SCHEMA = {
-    "type": "OBJECT",
+    "type": "object",
+    "additionalProperties": False,
     "properties": {
-        "english": {"type": "STRING", "description": "해설하는 영어 문장(한국어 입력이면 만든 영어 문장)"},
-        "korean": {"type": "STRING", "description": "자연스러운 한국어 뜻"},
-        "picture": {"type": "STRING", "description": "문장 전체가 그리는 그림을 두세 문장으로"},
-        "headwords": {"type": "ARRAY", "items": ITEM},
-        "contrasts": {"type": "ARRAY", "items": CONTRAST, "description": "같은 장면의 세 문장. 영어식, 한국어식 직역, 라틴어 계열 하나씩"},
-        "alternatives": {"type": "ARRAY", "items": {"type": "STRING"}, "description": "한국어 입력일 때 다른 상황에 맞는 영어 문장 0~2개와 그 차이 한 줄"},
-        "note": {"type": "STRING", "description": "학습 팁 한두 문장. 또는 처리하지 않은 까닭"},
+        "english": {"type": "string", "description": "해설하는 영어 문장(한국어 입력이면 만든 영어 문장)"},
+        "korean": {"type": "string", "description": "자연스러운 한국어 뜻"},
+        "picture": {"type": "string", "description": "문장 전체가 그리는 그림을 두세 문장으로"},
+        "headwords": {"type": "array", "items": ITEM},
+        "contrasts": {"type": "array", "items": CONTRAST, "description": "같은 장면의 세 문장. 영어식, 한국어식 직역, 라틴어 계열 하나씩"},
+        "alternatives": {"type": "array", "items": {"type": "string"}, "description": "한국어 입력일 때 다른 상황에 맞는 영어 문장 0~2개와 그 차이 한 줄"},
+        "note": {"type": "string", "description": "학습 팁 한두 문장. 또는 처리하지 않은 까닭"},
     },
-    "required": ["english", "korean", "picture", "headwords", "contrasts", "note"],
+    "required": ["english", "korean", "picture", "headwords", "contrasts", "alternatives", "note"],
 }
 
 app = FastAPI(title="english-sense-api", docs_url=None, redoc_url=None)
@@ -116,38 +117,41 @@ class Ask(BaseModel):
     text: str = Field(min_length=1, max_length=MAX_CHARS)
 
 
-async def _gemini(task: str) -> dict:
-    if not GEMINI_API_KEY:
+client = anthropic.AsyncAnthropic(max_retries=2, timeout=60.0) if os.environ.get("ANTHROPIC_API_KEY") else None
+
+
+async def _ask_claude(task: str) -> dict:
+    if client is None:
         raise HTTPException(503, "해설 서버가 아직 준비되지 않았습니다.")
-    body = {
-        "systemInstruction": {"parts": [{"text": RULES}]},
-        "contents": [{"role": "user", "parts": [{"text": task}]}],
-        "generationConfig": {
-            "temperature": 0.4,
-            "responseMimeType": "application/json",
-            "responseSchema": SCHEMA,
-        },
-    }
-    models = [GEMINI_MODEL] + [m for m in FALLBACK_MODELS if m != GEMINI_MODEL]
-    r = None
-    async with httpx.AsyncClient(timeout=60) as client:
-        for model in models:
-            url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
-            r = await client.post(url, json=body, headers={"x-goog-api-key": GEMINI_API_KEY})
-            if r.status_code not in (429, 500, 503):
-                break
-    if r is None or r.status_code != 200:
-        raise HTTPException(502, "해설을 만들지 못했습니다. 잠시 뒤 다시 써 주십시오.")
     try:
-        text = r.json()["candidates"][0]["content"]["parts"][0]["text"]
+        response = await client.beta.messages.create(
+            model=ANTHROPIC_MODEL,
+            max_tokens=16000,
+            # 감각 사전이 든 지시문은 매번 같으므로 캐시한다.
+            system=[{"type": "text", "text": RULES, "cache_control": {"type": "ephemeral"}}],
+            messages=[{"role": "user", "content": task}],
+            output_config={"effort": EFFORT, "format": {"type": "json_schema", "schema": SCHEMA}},
+            # 안전 분류기가 거절하면 서버가 거절 범주에 맞는 다른 모델로 다시 시도한다.
+            betas=["server-side-fallback-2026-07-01"],
+            fallbacks="default",
+        )
+    except anthropic.RateLimitError:
+        raise HTTPException(503, "지금 해설 요청이 많습니다. 잠시 뒤 다시 써 주십시오.")
+    except (anthropic.APIStatusError, anthropic.APIConnectionError):
+        raise HTTPException(502, "해설을 만들지 못했습니다. 잠시 뒤 다시 써 주십시오.")
+    if response.stop_reason == "refusal":
+        return {"english": "", "korean": "", "picture": "", "headwords": [], "contrasts": [], "alternatives": [],
+                "note": "이 문장은 해설하지 않았습니다. 다른 문장으로 써 주십시오."}
+    text = next((b.text for b in response.content if b.type == "text"), "")
+    try:
         return json.loads(text)
-    except Exception:
+    except json.JSONDecodeError:
         raise HTTPException(502, "해설을 읽지 못했습니다. 다시 써 주십시오.")
 
 
 @app.get("/health")
 def health() -> dict:
-    return {"ok": True, "ready": bool(GEMINI_API_KEY), "model": GEMINI_MODEL}
+    return {"ok": True, "ready": client is not None, "model": ANTHROPIC_MODEL}
 
 
 @app.post("/explain")
@@ -157,7 +161,7 @@ async def explain(ask: Ask, req: Request) -> dict:
         "다음 영어 문장을 감각 사전으로 해설하라. english 칸에는 이 문장을 그대로 두고(맞춤법이 틀렸으면 고친 문장), "
         "문장이 어색하면 note에 영어 화자가 실제로 쓰는 문장을 알려라.\n\n영어 문장: " + ask.text.strip()
     )
-    return await _gemini(task)
+    return await _ask_claude(task)
 
 
 @app.post("/translate")
@@ -168,4 +172,4 @@ async def translate(ask: Ask, req: Request) -> dict:
         "기본동사와 불변화사를 쓸 수 있으면 우선한다. contrasts에는 이 한국어를 그대로 옮긴 한국어식 직역을 꼭 넣는다.\n\n"
         "한국어 문장: " + ask.text.strip()
     )
-    return await _gemini(task)
+    return await _ask_claude(task)
