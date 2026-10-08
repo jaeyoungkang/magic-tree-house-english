@@ -15,7 +15,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
-GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
+GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-flash-latest")
+# 앞 모델이 붐비거나(503) 한도에 걸리면(429) 다음 모델로 넘어간다.
+FALLBACK_MODELS = [m for m in os.environ.get("GEMINI_FALLBACKS", "gemini-flash-latest,gemini-2.5-flash").split(",") if m]
 PER_IP_PER_DAY = int(os.environ.get("PER_IP_PER_DAY", "30"))
 GLOBAL_PER_DAY = int(os.environ.get("GLOBAL_PER_DAY", "600"))
 MAX_CHARS = 300
@@ -126,10 +128,15 @@ async def _gemini(task: str) -> dict:
             "responseSchema": SCHEMA,
         },
     }
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent"
+    models = [GEMINI_MODEL] + [m for m in FALLBACK_MODELS if m != GEMINI_MODEL]
+    r = None
     async with httpx.AsyncClient(timeout=60) as client:
-        r = await client.post(url, json=body, headers={"x-goog-api-key": GEMINI_API_KEY})
-    if r.status_code != 200:
+        for model in models:
+            url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
+            r = await client.post(url, json=body, headers={"x-goog-api-key": GEMINI_API_KEY})
+            if r.status_code not in (429, 500, 503):
+                break
+    if r is None or r.status_code != 200:
         raise HTTPException(502, "해설을 만들지 못했습니다. 잠시 뒤 다시 써 주십시오.")
     try:
         text = r.json()["candidates"][0]["content"]["parts"][0]["text"]
